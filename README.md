@@ -88,4 +88,5 @@ https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/setWebhook
 در هر مرحله از استفاده از بات میتوانید با استفاده از دستور /r بات را ریست کنید.
 
 برای آشنایی با سناریوی دراکولا این ریپازیتوری را مطالعه فرمایید.
+https://github.com/spyblaster/dracula/
    
