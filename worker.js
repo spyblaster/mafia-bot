@@ -241,11 +241,9 @@ async function handleUpdate(telegramToken, D1, env, update) {
   rolesAvailable = rolesAvailable || [];
   gameConfig.finalMoveCards = gameConfig.finalMoveCards || { available: [], used: [] };
 
-  
-
   // Handle /r command
   if (text === '/r') {
-    gameConfig.previousStep = gameConfig.step; // ذخیره مرحله فعلی
+    gameConfig.previousStep = gameConfig.step;
     gameConfig.step = 'confirm_reset';
     gameConfig.godStep = 'none';
     cachedData.gameConfig = gameConfig;
@@ -268,7 +266,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       await saveData(D1, cachedData, cachedPlayerNames);
       return new Response('OK', { status: 200 });
     } else if (callbackData === 'confirm_reset_no') {
-      gameConfig.step = gameConfig.previousStep || 'init'; // بازگشت به مرحله قبلی
+      gameConfig.step = gameConfig.previousStep || 'init';
       gameConfig.godStep = 'none';
       cachedData.gameConfig = gameConfig;
       let message, replyMarkup;
@@ -388,6 +386,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
     } else if (gameConfig.step === 'select_scenario') {
       if (['بازپرس', 'نماینده', 'دراکولا', 'شب مافیا'].includes(text)) {
         gameConfig.scenario = text;
+        rolesAssigned = []; // ریست rolesAssigned برای جلوگیری از تداخل با بازی قبلی
         if (text === 'دراکولا') {
           gameConfig.playerCount = 9;
           gameConfig.roles = SCENARIOS.دراکولا[9];
@@ -438,6 +437,8 @@ async function handleUpdate(telegramToken, D1, env, update) {
           });
         }
         cachedData.gameConfig = gameConfig;
+        cachedData.rolesAssigned = rolesAssigned; // ذخیره rolesAssigned ریست‌شده
+        cachedData.rolesAvailable = rolesAvailable;
         await saveData(D1, cachedData, cachedPlayerNames);
       } else {
         await sendMessage(telegramToken, chatId, '🚫 سناریو نامعتبر. دوباره انتخاب کنید:', {
@@ -480,6 +481,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
         });
         cachedData.gameConfig = gameConfig;
         cachedData.rolesAvailable = rolesAvailable;
+        cachedData.rolesAssigned = rolesAssigned; // ذخیره rolesAssigned
         await saveData(D1, cachedData, cachedPlayerNames);
       } else {
         await sendMessage(telegramToken, chatId, `🚫 تعداد نامعتبر. ${gameConfig.scenario === 'شب مافیا' ? 'یکی از 15، 16، 18، 19، 21، 22، 24، 25 یا 26' : 'یکی از 10، 12 یا 13'} را انتخاب کنید:`, {
@@ -939,7 +941,7 @@ export default {
 
     try {
       const update = await request.json();
-      return await handleUpdate(telegramToken, D1, env, update); // اضافه کردن env به فراخوانی
+      return await handleUpdate(telegramToken, D1, env, update);
     } catch (error) {
       console.error(`Error processing webhook: ${error.message}`);
       return new Response(`Error processing webhook: ${error.message}`, { status: 500 });
