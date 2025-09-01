@@ -51,6 +51,11 @@ const SCENARIOS = {
     }
   },
   'شب مافیا': {
+    14: {
+      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش'],
+      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'جادوگر', 'شهردار', 'قاضی', 'قهرمان'],
+      مستقل: ['سایه']
+    },
     15: {
       مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب'],
       شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'قهرمان'],
@@ -406,26 +411,27 @@ async function handleUpdate(telegramToken, D1, env, update) {
           gameConfig.step = 'select_player_count';
           gameConfig.godStep = 'none';
           await sendMessage(telegramToken, chatId, '🔢 تعداد پلیرها را انتخاب کنید:', {
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  { text: '15', callback_data: 'player_count_15' },
-                  { text: '16', callback_data: 'player_count_16' },
-                  { text: '18', callback_data: 'player_count_18' }
-                ],
-                [
-                  { text: '19', callback_data: 'player_count_19' },
-                  { text: '21', callback_data: 'player_count_21' },
-                  { text: '22', callback_data: 'player_count_22' }
-                ],
-                [
-                  { text: '24', callback_data: 'player_count_24' },
-                  { text: '25', callback_data: 'player_count_25' },
-                  { text: '26', callback_data: 'player_count_26' }
-                ]
-              ]
-            }
-          });
+  reply_markup: {
+    inline_keyboard: [
+      [
+        { text: '14', callback_data: 'player_count_14' },
+        { text: '15', callback_data: 'player_count_15' },
+        { text: '16', callback_data: 'player_count_16' },
+        { text: '18', callback_data: 'player_count_18' }
+      ],
+      [
+        { text: '19', callback_data: 'player_count_19' },
+        { text: '21', callback_data: 'player_count_21' },
+        { text: '22', callback_data: 'player_count_22' }
+      ],
+      [
+        { text: '24', callback_data: 'player_count_24' },
+        { text: '25', callback_data: 'player_count_25' },
+        { text: '26', callback_data: 'player_count_26' }
+      ]
+    ]
+  }
+});
         } else {
           gameConfig.step = 'select_player_count';
           gameConfig.godStep = 'none';
@@ -455,7 +461,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       } else if (gameConfig.scenario !== 'شب مافیا') {
         count = parseInt(text);
       }
-      const validCounts = gameConfig.scenario === 'شب مافیا' ? [15, 16, 18, 19, 21, 22, 24, 25, 26] : [10, 12, 13];
+      const validCounts = gameConfig.scenario === 'شب مافیا' ? [14, 15, 16, 18, 19, 21, 22, 24, 25, 26] : [10, 12, 13];
       if (validCounts.includes(count)) {
         gameConfig.playerCount = count;
         gameConfig.roles = SCENARIOS[gameConfig.scenario][count];
