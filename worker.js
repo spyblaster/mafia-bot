@@ -17,90 +17,29 @@ const FINAL_MOVE_CARDS = [
 
 const SCENARIOS = {
   بازپرس: {
-    10: {
-      مافیا: ['رییس', 'ناتو', 'شیاد'],
-      شهروند: ['دکتر', 'محقق', 'بازپرس', 'کارآگاه', 'شهروند_ساده1', 'شهروند_ساده2', 'رویین_تن']
-    },
-    12: {
-      مافیا: ['رییس', 'ناتو', 'شیاد', 'مافیای_ساده'],
-      شهروند: ['دکتر', 'محقق', 'کارآگاه', 'اسنایپر', 'بازپرس', 'شهروند_ساده2', 'شهروند_ساده1', 'رویین_تن']
-    },
-    13: {
-      مافیا: ['رییس', 'ناتو', 'شیاد', 'مافیای_ساده'],
-      شهروند: ['دکتر', 'محقق', 'کارآگاه', 'اسنایپر', 'بازپرس', 'شهروند_ساده1', 'شهروند_ساده2', 'شهروند_ساده3', 'رویین_تن']
-    }
+    10: { مافیا: ['رییس', 'ناتو', 'شیاد'], شهروند: ['دکتر', 'محقق', 'بازپرس', 'کارآگاه', 'شهروند_ساده1', 'شهروند_ساده2', 'رویین_تن'] },
+    12: { مافیا: ['رییس', 'ناتو', 'شیاد', 'مافیای_ساده'], شهروند: ['دکتر', 'محقق', 'کارآگاه', 'اسنایپر', 'بازپرس', 'شهروند_ساده2', 'شهروند_ساده1', 'رویین_تن'] },
+    13: { مافیا: ['رییس', 'ناتو', 'شیاد', 'مافیای_ساده'], شهروند: ['دکتر', 'محقق', 'کارآگاه', 'اسنایپر', 'بازپرس', 'شهروند_ساده1', 'شهروند_ساده2', 'شهروند_ساده3', 'رویین_تن'] }
   },
   نماینده: {
-    10: {
-      مافیا: ['رییس', 'یاغی', 'هکر'],
-      شهروند: ['دکتر', 'مین_گذار', 'وکیل', 'محافظ', 'راهنما', 'شهروند_ساده2', 'شهروند_ساده1']
-    },
-    12: {
-      مافیا: ['رییس', 'ناتو', 'یاغی', 'هکر'],
-      شهروند: ['سرباز', 'دکتر', 'مین_گذار', 'وکیل', 'محافظ', 'راهنما', 'شهروند_ساده2', 'شهروند_ساده1']
-    },
-    13: {
-      مافیا: ['رییس', 'ناتو', 'یاغی', 'هکر'],
-      شهروند: ['سرباز', 'دکتر', 'مین_گذار', 'وکیل', 'محافظ', 'راهنما', 'شهروند_ساده3', 'شهروند_ساده2', 'شهروند_ساده1']
-    }
+    10: { مافیا: ['رییس', 'یاغی', 'هکر'], شهروند: ['دکتر', 'مین_گذار', 'وکیل', 'محافظ', 'راهنما', 'شهروند_ساده2', 'شهروند_ساده1'] },
+    12: { مافیا: ['رییس', 'ناتو', 'یاغی', 'هکر'], شهروند: ['سرباز', 'دکتر', 'مین_گذار', 'وکیل', 'محافظ', 'راهنما', 'شهروند_ساده2', 'شهروند_ساده1'] },
+    13: { مافیا: ['رییس', 'ناتو', 'یاغی', 'هکر'], شهروند: ['سرباز', 'دکتر', 'مین_گذار', 'وکیل', 'محافظ', 'راهنما', 'شهروند_ساده3', 'شهروند_ساده2', 'شهروند_ساده1'] }
   },
   دراکولا: {
-    9: {
-      مافیا: ['دراکولا', 'خانم_وستنرا', 'رنفیلد'],
-      شهروند: ['مرلین', 'فن_هلسینگ', 'سیوارد', 'گوردون', 'کشاورز1', 'کشاورز2']
-    }
+    9: { مافیا: ['دراکولا', 'خانم_وستنرا', 'رنفیلد'], شهروند: ['مرلین', 'فن_هلسینگ', 'سیوارد', 'گوردون', 'کشاورز1', 'کشاورز2'] }
   },
   'شب مافیا': {
-    14: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'جادوگر', 'شهردار', 'قاضی', 'قهرمان'],
-      مستقل: ['سایه']
-    },
-    15: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'قهرمان'],
-      مستقل: []
-    },
-    16: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'گورکن', 'رمال', 'جادوگر', 'کلانتر', 'کلانتر_ستاره_دار', 'شهردار', 'قاضی', 'قهرمان', 'دستکج'],
-      مستقل: []
-    },
-    18: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'قهرمان'],
-      مستقل: []
-    },
-    19: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'قهرمان', 'تفنگ_ساز'],
-      مستقل: ['هزارچهره']
-    },
-    21: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'قهرمان'],
-      مستقل: []
-    },
-    22: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'قهرمان'],
-      مستقل: ['هزارچهره']
-    },
-    24: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس', 'بمب_ساز'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'بازپرس', 'فدایی', 'قهرمان'],
-      مستقل: []
-    },
-    25: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس', 'بمب_ساز'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'بازپرس', 'فدایی', 'قهرمان'],
-      مستقل: ['هزارچهره']
-    },
-    26: {
-      مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس', 'بمب_ساز'],
-      شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'بازپرس', 'فدایی', 'قهرمان'],
-      مستقل: ['هزارچهره', 'ساغر']
-    }
+    14: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'جادوگر', 'شهردار', 'قاضی', 'قهرمان'], مستقل: ['سایه'] },
+    15: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'قهرمان'], مستقل: [] },
+    16: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'گورکن', 'رمال', 'جادوگر', 'کلانتر', 'کلانتر_ستاره_دار', 'شهردار', 'قاضی', 'قهرمان', 'دستکج'], مستقل: [] },
+    18: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'قهرمان'], مستقل: [] },
+    19: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'قهرمان', 'تفنگ_ساز'], مستقل: ['هزارچهره'] },
+    21: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'قهرمان'], مستقل: [] },
+    22: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'قهرمان'], مستقل: ['هزارچهره'] },
+    24: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس', 'بمب_ساز'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'بازپرس', 'فدایی', 'قهرمان'], مستقل: [] },
+    25: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس', 'بمب_ساز'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'بازپرس', 'فدایی', 'قهرمان'], مستقل: ['هزارچهره'] },
+    26: { مافیا: ['رییس', 'جراح', 'شب_خسب', 'شاه_کش', 'جلب', 'معشوقه', 'کابوس', 'بمب_ساز'], شهروند: ['دکتر', 'دکتر_ستاره_دار', 'کلانتر', 'کلانتر_ستاره_دار', 'گورکن', 'گورکن_ستاره_دار', 'رمال', 'جادوگر', 'شهردار', 'قاضی', 'تفنگ_ساز', 'دستکج', 'افشاگر', 'بازپرس', 'فدایی', 'قهرمان'], مستقل: ['هزارچهره', 'ساغر'] }
   }
 };
 
@@ -135,7 +74,7 @@ async function loadData(D1) {
     ]);
 
     const defaultData = {
-      gameConfig: { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] } },
+      gameConfig: { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] }, lock: false },
       players: {},
       rolesAssigned: [],
       rolesAvailable: []
@@ -149,7 +88,7 @@ async function loadData(D1) {
     console.error(`Error loading data from D1: ${error.message}`);
     return {
       cachedData: {
-        gameConfig: { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] } },
+        gameConfig: { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] }, lock: false },
         players: {},
         rolesAssigned: [],
         rolesAvailable: []
@@ -201,7 +140,9 @@ async function sendMessage(telegramToken, chatId, text, options = {}, autoDelete
       return null;
     }
     if (autoDelete) {
-      setTimeout(() => deleteMessage(telegramToken, chatId, result.result.message_id), 15000);
+      // Wait for 15 seconds before deleting
+      await new Promise(resolve => setTimeout(resolve, 15000));
+      await deleteMessage(telegramToken, chatId, result.result.message_id);
     }
     return result;
   } catch (error) {
@@ -211,15 +152,52 @@ async function sendMessage(telegramToken, chatId, text, options = {}, autoDelete
 }
 
 // Section 6: Game Logic
-async function assignRole(rolesAvailable, rolesAssigned, players, playerId, name) {
-  const availableRoles = rolesAvailable.filter(r => !rolesAssigned.includes(r));
-  if (availableRoles.length === 0) {
-    return { success: false, message: '🚫 هیچ نقشی برای تخصیص باقی نمانده است.' };
+async function assignRole(rolesAvailable, rolesAssigned, players, playerId, name, playerCount, gameConfig, D1, cachedData, cachedPlayerNames) {
+  if (gameConfig.lock) {
+    return { success: false, message: '🚫 تخصیص نقش در حال انجام است. لطفاً چند لحظه صبر کنید.' };
   }
-  const role = availableRoles[Math.floor(Math.random() * availableRoles.length)];
-  players[playerId] = { name, role };
-  rolesAssigned.push(role);
-  return { success: true, role };
+  gameConfig.lock = true;
+  cachedData.gameConfig = gameConfig;
+  await saveData(D1, cachedData, cachedPlayerNames);
+
+  try {
+    const availableRoles = rolesAvailable.filter(r => !rolesAssigned.includes(r));
+    if (availableRoles.length === 0 || rolesAssigned.length >= playerCount) {
+      gameConfig.lock = false;
+      cachedData.gameConfig = gameConfig;
+      await saveData(D1, cachedData, cachedPlayerNames);
+      return { success: false, message: '🚫 هیچ نقشی برای تخصیص باقی نمانده است.' };
+    }
+    console.log('Before assign:', { availableRoles, rolesAssigned, playerCount });
+    const role = availableRoles[Math.floor(Math.random() * availableRoles.length)];
+    players[playerId] = { name, role };
+    rolesAssigned.push(role);
+    console.log('After assign:', { role, availableRoles, rolesAssigned });
+
+    if (rolesAssigned.length > playerCount) {
+      rolesAssigned.pop();
+      delete players[playerId];
+      gameConfig.lock = false;
+      cachedData.gameConfig = gameConfig;
+      cachedData.players = players;
+      cachedData.rolesAssigned = rolesAssigned;
+      await saveData(D1, cachedData, cachedPlayerNames);
+      return { success: false, message: '🚫 خطا: تعداد نقش‌های تخصیص‌شده بیش از حد مجاز است.' };
+    }
+
+    gameConfig.lock = false;
+    cachedData.gameConfig = gameConfig;
+    cachedData.players = players;
+    cachedData.rolesAssigned = rolesAssigned;
+    await saveData(D1, cachedData, cachedPlayerNames);
+    return { success: true, role };
+  } catch (error) {
+    gameConfig.lock = false;
+    cachedData.gameConfig = gameConfig;
+    await saveData(D1, cachedData, cachedPlayerNames);
+    console.error(`Error in assignRole: ${error.message}`);
+    return { success: false, message: '🚫 خطا در تخصیص نقش.' };
+  }
 }
 
 // Section 7: Update Handler
@@ -240,7 +218,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
 
   let { cachedData, cachedPlayerNames } = await loadData(D1);
   let { gameConfig, players, rolesAssigned, rolesAvailable } = cachedData;
-  gameConfig = gameConfig || { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] } };
+  gameConfig = gameConfig || { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] }, lock: false };
   players = players || {};
   rolesAssigned = rolesAssigned || [];
   rolesAvailable = rolesAvailable || [];
@@ -251,6 +229,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
     gameConfig.previousStep = gameConfig.step;
     gameConfig.step = 'confirm_reset';
     gameConfig.godStep = 'none';
+    gameConfig.lock = false;
     cachedData.gameConfig = gameConfig;
     await sendMessage(telegramToken, chatId, '⚠️ آیا مطمئن هستید که می‌خواهید بازی را ریست کنید؟', {
       reply_markup: {
@@ -266,6 +245,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
     if (callbackData === 'confirm_reset_yes') {
       gameConfig.step = 'check_master_password_reset';
       gameConfig.godStep = 'none';
+      gameConfig.lock = false;
       cachedData.gameConfig = gameConfig;
       await sendMessage(telegramToken, chatId, '🔑 رمز مستر را وارد کنید:');
       await saveData(D1, cachedData, cachedPlayerNames);
@@ -273,6 +253,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
     } else if (callbackData === 'confirm_reset_no') {
       gameConfig.step = gameConfig.previousStep || 'init';
       gameConfig.godStep = 'none';
+      gameConfig.lock = false;
       cachedData.gameConfig = gameConfig;
       let message, replyMarkup;
       if (gameConfig.step === 'init') {
@@ -295,6 +276,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
         replyMarkup = gameConfig.scenario === 'شب مافیا' ? {
           inline_keyboard: [
             [
+              { text: '14', callback_data: 'player_count_14' },
               { text: '15', callback_data: 'player_count_15' },
               { text: '16', callback_data: 'player_count_16' },
               { text: '18', callback_data: 'player_count_18' }
@@ -325,7 +307,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       } else {
         message = '🚫 ریست بازی لغو شد. 📋 دستورات شما:';
         replyMarkup = {
-          keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+          keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
             [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
             [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
           one_time_keyboard: false
@@ -337,7 +319,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
     }
   } else if (gameConfig.step === 'check_master_password_reset') {
     if (text === env.MASTER_PASSWORD) {
-      cachedData.gameConfig = { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] } };
+      cachedData.gameConfig = { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] }, lock: false };
       cachedData.players = {};
       cachedData.rolesAssigned = [];
       cachedData.rolesAvailable = [];
@@ -356,6 +338,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
   if (text === '/god' && !gameConfig.godChatId) {
     gameConfig.step = 'check_master_password_god';
     gameConfig.godStep = 'none';
+    gameConfig.lock = false;
     cachedData.gameConfig = gameConfig;
     await sendMessage(telegramToken, chatId, '🔑 رمز مستر را وارد کنید:');
     await saveData(D1, cachedData, cachedPlayerNames);
@@ -365,6 +348,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       gameConfig.godChatId = chatId;
       gameConfig.step = 'set_game_password';
       gameConfig.godStep = 'none';
+      gameConfig.lock = false;
       cachedData.gameConfig = gameConfig;
       await sendMessage(telegramToken, chatId, '🎲 رمز بازی را تعیین کنید:');
       await saveData(D1, cachedData, cachedPlayerNames);
@@ -380,6 +364,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       gameConfig.gamePassword = text;
       gameConfig.step = 'select_scenario';
       gameConfig.godStep = 'none';
+      gameConfig.lock = false;
       await sendMessage(telegramToken, chatId, '🎮 سناریو را انتخاب کنید:', {
         reply_markup: {
           keyboard: [['بازپرس'], ['نماینده'], ['دراکولا'], ['شب مافیا']],
@@ -391,7 +376,8 @@ async function handleUpdate(telegramToken, D1, env, update) {
     } else if (gameConfig.step === 'select_scenario') {
       if (['بازپرس', 'نماینده', 'دراکولا', 'شب مافیا'].includes(text)) {
         gameConfig.scenario = text;
-        rolesAssigned = []; // ریست rolesAssigned برای جلوگیری از تداخل با بازی قبلی
+        rolesAssigned = [];
+        gameConfig.lock = false;
         if (text === 'دراکولا') {
           gameConfig.playerCount = 9;
           gameConfig.roles = SCENARIOS.دراکولا[9];
@@ -411,27 +397,27 @@ async function handleUpdate(telegramToken, D1, env, update) {
           gameConfig.step = 'select_player_count';
           gameConfig.godStep = 'none';
           await sendMessage(telegramToken, chatId, '🔢 تعداد پلیرها را انتخاب کنید:', {
-  reply_markup: {
-    inline_keyboard: [
-      [
-        { text: '14', callback_data: 'player_count_14' },
-        { text: '15', callback_data: 'player_count_15' },
-        { text: '16', callback_data: 'player_count_16' },
-        { text: '18', callback_data: 'player_count_18' }
-      ],
-      [
-        { text: '19', callback_data: 'player_count_19' },
-        { text: '21', callback_data: 'player_count_21' },
-        { text: '22', callback_data: 'player_count_22' }
-      ],
-      [
-        { text: '24', callback_data: 'player_count_24' },
-        { text: '25', callback_data: 'player_count_25' },
-        { text: '26', callback_data: 'player_count_26' }
-      ]
-    ]
-  }
-});
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  { text: '14', callback_data: 'player_count_14' },
+                  { text: '15', callback_data: 'player_count_15' },
+                  { text: '16', callback_data: 'player_count_16' },
+                  { text: '18', callback_data: 'player_count_18' }
+                ],
+                [
+                  { text: '19', callback_data: 'player_count_19' },
+                  { text: '21', callback_data: 'player_count_21' },
+                  { text: '22', callback_data: 'player_count_22' }
+                ],
+                [
+                  { text: '24', callback_data: 'player_count_24' },
+                  { text: '25', callback_data: 'player_count_25' },
+                  { text: '26', callback_data: 'player_count_26' }
+                ]
+              ]
+            }
+          });
         } else {
           gameConfig.step = 'select_player_count';
           gameConfig.godStep = 'none';
@@ -443,7 +429,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
           });
         }
         cachedData.gameConfig = gameConfig;
-        cachedData.rolesAssigned = rolesAssigned; // ذخیره rolesAssigned ریست‌شده
+        cachedData.rolesAssigned = rolesAssigned;
         cachedData.rolesAvailable = rolesAvailable;
         await saveData(D1, cachedData, cachedPlayerNames);
       } else {
@@ -470,6 +456,8 @@ async function handleUpdate(telegramToken, D1, env, update) {
           ...gameConfig.roles.شهروند,
           ...(gameConfig.roles.مستقل || [])
         ];
+        rolesAssigned = [];
+        gameConfig.lock = false;
         gameConfig.citizenCount = gameConfig.roles.شهروند.length;
         gameConfig.mafiaCount = gameConfig.roles.مافیا.length;
         gameConfig.independentCount = (gameConfig.roles.مستقل || []).length;
@@ -487,13 +475,14 @@ async function handleUpdate(telegramToken, D1, env, update) {
         });
         cachedData.gameConfig = gameConfig;
         cachedData.rolesAvailable = rolesAvailable;
-        cachedData.rolesAssigned = rolesAssigned; // ذخیره rolesAssigned
+        cachedData.rolesAssigned = rolesAssigned;
         await saveData(D1, cachedData, cachedPlayerNames);
       } else {
-        await sendMessage(telegramToken, chatId, `🚫 تعداد نامعتبر. ${gameConfig.scenario === 'شب مافیا' ? 'یکی از 15، 16، 18، 19، 21، 22، 24، 25 یا 26' : 'یکی از 10، 12 یا 13'} را انتخاب کنید:`, {
+        await sendMessage(telegramToken, chatId, `🚫 تعداد نامعتبر. یکی از ${gameConfig.scenario === 'شب مافیا' ? '14، 15، 16، 18، 19، 21، 22، 24، 25 یا 26' : '10، 12 یا 13'} را انتخاب کنید:`, {
           reply_markup: gameConfig.scenario === 'شب مافیا' ? {
             inline_keyboard: [
               [
+                { text: '14', callback_data: 'player_count_14' },
                 { text: '15', callback_data: 'player_count_15' },
                 { text: '16', callback_data: 'player_count_16' },
                 { text: '18', callback_data: 'player_count_18' }
@@ -519,6 +508,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       if (text === 'بله' || callbackData === 'confirm_yes') {
         gameConfig.step = 'ready';
         gameConfig.godStep = 'none';
+        gameConfig.lock = false;
         await sendMessage(telegramToken, chatId, '🎉 بازی آماده است! پلیرها می‌توانند با ارسال رمز بازی نقش بگیرند.\n📋 دستورات شما:', {
           reply_markup: {
             keyboard: [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
@@ -530,6 +520,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       } else if (text === 'خیر' || callbackData === 'confirm_no') {
         gameConfig.step = 'select_scenario';
         gameConfig.godStep = 'none';
+        gameConfig.lock = false;
         await sendMessage(telegramToken, chatId, '🎮 سناریو را انتخاب کنید:', {
           reply_markup: {
             keyboard: [['بازپرس'], ['نماینده'], ['دراکولا'], ['شب مافیا']],
@@ -565,11 +556,12 @@ async function handleUpdate(telegramToken, D1, env, update) {
               return player ? `• ${role} - ${player[1].name}` : null;
             }).filter(line => line !== null).join('\n') || 'هیچ'
           : '';
-        const response = `📋 فهرست نقش‌ها:\n🕴️ مافیا:\n${mafiaList}\n\n🧑 شهروند:\n${citizenList}${independentList ? `\n\n🦹 مستقل:\n${independentList}` : ''}\n\n🔢 تعداد نقش‌های توزیع‌نشده: ${rolesAvailable.length - rolesAssigned.length}`;
+        const unassignedCount = Math.max(0, gameConfig.playerCount - rolesAssigned.length);
+        const response = `📋 فهرست نقش‌ها:\n🕴️ مافیا:\n${mafiaList}\n\n🧑 شهروند:\n${citizenList}${independentList ? `\n\n🦹 مستقل:\n${independentList}` : ''}\n\n🔢 تعداد نقش‌های توزیع‌نشده: ${unassignedCount}`;
         await sendMessage(telegramToken, chatId, response);
         await sendMessage(telegramToken, chatId, '📋 دستورات شما:', {
           reply_markup: {
-            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
               [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
               [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
             one_time_keyboard: false
@@ -597,7 +589,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
         cachedData.gameConfig = gameConfig;
         await saveData(D1, cachedData, cachedPlayerNames);
       } else if (text === 'کارت حرکت آخر' && gameConfig.scenario === 'شب مافیا') {
-        if (rolesAssigned.length !== rolesAvailable.length) {
+        if (rolesAssigned.length !== gameConfig.playerCount) {
           await sendMessage(telegramToken, chatId, '🚫 همه نقش‌ها باید توزیع شده باشند تا بتوانید کارت حرکت آخر را انتخاب کنید.');
           await sendMessage(telegramToken, chatId, '📋 دستورات شما:', {
             reply_markup: {
@@ -638,9 +630,9 @@ async function handleUpdate(telegramToken, D1, env, update) {
         cachedData.gameConfig = gameConfig;
         await saveData(D1, cachedData, cachedPlayerNames);
       } else {
-        await sendMessage(telegramToken, chatId, '📋 دستورات معتبر:\n• فهرست\n• نقش دادن\n• پایان بازی' + (gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ? '\n• کارت حرکت آخر' : '') + '\n• پاک‌سازی نقش‌ها', {
+        await sendMessage(telegramToken, chatId, '📋 دستورات معتبر:\n• فهرست\n• نقش دادن\n• پایان بازی' + (gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ? '\n• کارت حرکت آخر' : '') + '\n• پاک‌سازی نقش‌ها', {
           reply_markup: {
-            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
               [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
               [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
             one_time_keyboard: false
@@ -650,9 +642,10 @@ async function handleUpdate(telegramToken, D1, env, update) {
     } else if (gameConfig.godStep === 'assign_role_set_name') {
       if (callbackData === 'cancel_assign_role') {
         gameConfig.godStep = 'none';
+        gameConfig.lock = false;
         await sendMessage(telegramToken, chatId, '🚫 فرآیند تخصیص نقش لغو شد. 📋 دستورات شما:', {
           reply_markup: {
-            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
               [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
               [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
             one_time_keyboard: false
@@ -669,15 +662,14 @@ async function handleUpdate(telegramToken, D1, env, update) {
         return new Response('OK', { status: 200 });
       } else {
         const playerId = `god_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-        const result = await assignRole(rolesAvailable, rolesAssigned, players, playerId, text);
+        const result = await assignRole(rolesAvailable, rolesAssigned, players, playerId, text, gameConfig.playerCount, gameConfig, D1, cachedData, cachedPlayerNames);
         if (result.success) {
           cachedPlayerNames[playerId] = text;
-          await saveData(D1, cachedData, cachedPlayerNames);
-          await sendMessage(telegramToken, chatId, `✅ نقش ${result.role} به ${text} داده شد.`, {}, true);
+await sendMessage(telegramToken, chatId, `✅ نقش ${result.role} به ${text} داده شد.`, {}, true);
           gameConfig.godStep = 'none';
           await sendMessage(telegramToken, chatId, '📋 دستورات شما:', {
             reply_markup: {
-              keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+              keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
                 [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
                 [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
               one_time_keyboard: false
@@ -688,7 +680,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
           gameConfig.godStep = 'none';
           await sendMessage(telegramToken, chatId, '📋 دستورات شما:', {
             reply_markup: {
-              keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+              keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
                 [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
                 [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
               one_time_keyboard: false
@@ -704,6 +696,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       if (callbackData === 'confirm_end_yes') {
         gameConfig.step = 'check_master_password_reset';
         gameConfig.godStep = 'none';
+        gameConfig.lock = false;
         cachedPlayerNames = Object.fromEntries(
           Object.entries(cachedPlayerNames).filter(([userId]) => !userId.startsWith('god_'))
         );
@@ -712,9 +705,10 @@ async function handleUpdate(telegramToken, D1, env, update) {
         await sendMessage(telegramToken, chatId, '🔑 رمز مستر را وارد کنید:');
       } else if (callbackData === 'confirm_end_no') {
         gameConfig.godStep = 'none';
+        gameConfig.lock = false;
         await sendMessage(telegramToken, chatId, '🚫 پایان بازی لغو شد. 📋 دستورات شما:', {
           reply_markup: {
-            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
               [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
               [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
             one_time_keyboard: false
@@ -726,6 +720,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
     } else if (gameConfig.godStep === 'select_final_move_card' && gameConfig.scenario === 'شب مافیا') {
       if (callbackData === 'cancel_final_move_card') {
         gameConfig.godStep = 'none';
+        gameConfig.lock = false;
         await sendMessage(telegramToken, chatId, '🚫 فرآیند کارت حرکت آخر لغو شد. 📋 دستورات شما:', {
           reply_markup: {
             keyboard: [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']],
@@ -751,6 +746,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
         gameConfig.finalMoveCards.available = gameConfig.finalMoveCards.available.filter(card => card.number !== selectedNumber);
         gameConfig.finalMoveCards.available = reassignCardNumbers(gameConfig.finalMoveCards.available);
         gameConfig.godStep = 'none';
+        gameConfig.lock = false;
         await sendMessage(telegramToken, chatId, `🃏 کارت حرکت آخر: ${selectedCard.card}`);
         await sendMessage(telegramToken, chatId, '📋 دستورات شما:', {
           reply_markup: {
@@ -771,14 +767,16 @@ async function handleUpdate(telegramToken, D1, env, update) {
       if (callbackData === 'confirm_clear_yes') {
         gameConfig.godStep = 'set_new_game_password';
         gameConfig.oldGamePassword = gameConfig.gamePassword;
+        gameConfig.lock = false;
         await sendMessage(telegramToken, chatId, '🎲 رمز بازی جدید را تعیین کنید (نباید با رمز قبلی یکسان باشد):');
         cachedData.gameConfig = gameConfig;
         await saveData(D1, cachedData, cachedPlayerNames);
       } else if (callbackData === 'confirm_clear_no') {
         gameConfig.godStep = 'none';
+        gameConfig.lock = false;
         await sendMessage(telegramToken, chatId, '🚫 پاک‌سازی نقش‌ها لغو شد. 📋 دستورات شما:', {
           reply_markup: {
-            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
               [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
               [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
             one_time_keyboard: false
@@ -796,6 +794,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       gameConfig.playerState = {};
       players = {};
       rolesAssigned = [];
+      gameConfig.lock = false;
       gameConfig.finalMoveCards = initializeFinalMoveCards(gameConfig.independentCount || 0);
       cachedPlayerNames = Object.fromEntries(
         Object.entries(cachedPlayerNames).filter(([userId]) => !userId.startsWith('god_'))
@@ -803,7 +802,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
       gameConfig.godStep = 'none';
       await sendMessage(telegramToken, chatId, '✅ نقش‌ها پاک‌سازی شدند و رمز جدید تنظیم شد. پلیرها می‌توانند با رمز جدید نقش بگیرند.\n📋 دستورات شما:', {
         reply_markup: {
-          keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === rolesAvailable.length ?
+          keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
             [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
             [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
           one_time_keyboard: false
@@ -852,9 +851,8 @@ async function handleUpdate(telegramToken, D1, env, update) {
         if (text === gameConfig.gamePassword) {
           const savedName = cachedPlayerNames[userId];
           if (savedName && isValidName(savedName)) {
-            const result = await assignRole(rolesAvailable, rolesAssigned, players, userId, savedName);
+            const result = await assignRole(rolesAvailable, rolesAssigned, players, userId, savedName, gameConfig.playerCount, gameConfig, D1, cachedData, cachedPlayerNames);
             if (result.success) {
-              await saveData(D1, cachedData, cachedPlayerNames);
               await sendMessage(telegramToken, chatId, `✅ نام: ${savedName} | نقش: ${result.role}`, {
                 reply_markup: {
                   inline_keyboard: [[{ text: '✏️ تغییر نام', callback_data: 'change_name' }]]
@@ -885,15 +883,14 @@ async function handleUpdate(telegramToken, D1, env, update) {
           await sendMessage(telegramToken, chatId, '🚫 نام نامعتبر است. فقط حروف فارسی (حداقل ۳ حرف) مجاز است. دوباره وارد کنید:');
           return new Response('OK', { status: 200 });
         }
-        const result = await assignRole(rolesAvailable, rolesAssigned, players, userId, text);
+        const result = await assignRole(rolesAvailable, rolesAssigned, players, userId, text, gameConfig.playerCount, gameConfig, D1, cachedData, cachedPlayerNames);
         if (result.success) {
           cachedPlayerNames[userId] = text;
-          await saveData(D1, cachedData, cachedPlayerNames);
-          await sendMessage(telegramToken, chatId, `✅ نام: ${text} | نقش: ${result.role}`, {
-            reply_markup: {
-              inline_keyboard: [[{ text: '✏️ تغییر نام', callback_data: 'change_name' }]]
-            }
-          }, true);
+await sendMessage(telegramToken, chatId, `✅ نام: ${text} | نقش: ${result.role}`, {
+  reply_markup: {
+    inline_keyboard: [[{ text: '✏️ تغییر نام', callback_data: 'change_name' }]]
+  }
+}, true);
           delete gameConfig.playerState[userId];
           cachedData.gameConfig = gameConfig;
           cachedData.players = players;
