@@ -140,9 +140,7 @@ async function sendMessage(telegramToken, chatId, text, options = {}, autoDelete
       return null;
     }
     if (autoDelete) {
-      // Wait for 15 seconds before deleting
-      await new Promise(resolve => setTimeout(resolve, 15000));
-      await deleteMessage(telegramToken, chatId, result.result.message_id);
+      setTimeout(() => deleteMessage(telegramToken, chatId, result.result.message_id), 15000);
     }
     return result;
   } catch (error) {
@@ -665,7 +663,7 @@ async function handleUpdate(telegramToken, D1, env, update) {
         const result = await assignRole(rolesAvailable, rolesAssigned, players, playerId, text, gameConfig.playerCount, gameConfig, D1, cachedData, cachedPlayerNames);
         if (result.success) {
           cachedPlayerNames[playerId] = text;
-await sendMessage(telegramToken, chatId, `✅ نقش ${result.role} به ${text} داده شد.`, {}, true);
+          await sendMessage(telegramToken, chatId, `✅ نقش ${result.role} به ${text} داده شد.`, {}, true);
           gameConfig.godStep = 'none';
           await sendMessage(telegramToken, chatId, '📋 دستورات شما:', {
             reply_markup: {
@@ -886,11 +884,11 @@ await sendMessage(telegramToken, chatId, `✅ نقش ${result.role} به ${text}
         const result = await assignRole(rolesAvailable, rolesAssigned, players, userId, text, gameConfig.playerCount, gameConfig, D1, cachedData, cachedPlayerNames);
         if (result.success) {
           cachedPlayerNames[userId] = text;
-await sendMessage(telegramToken, chatId, `✅ نام: ${text} | نقش: ${result.role}`, {
-  reply_markup: {
-    inline_keyboard: [[{ text: '✏️ تغییر نام', callback_data: 'change_name' }]]
-  }
-}, true);
+          await sendMessage(telegramToken, chatId, `✅ نام: ${text} | نقش: ${result.role}`, {
+            reply_markup: {
+              inline_keyboard: [[{ text: '✏️ تغییر نام', callback_data: 'change_name' }]]
+            }
+          }, true);
           delete gameConfig.playerState[userId];
           cachedData.gameConfig = gameConfig;
           cachedData.players = players;
