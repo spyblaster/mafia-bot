@@ -74,7 +74,14 @@ async function loadData(D1) {
     ]);
 
     const defaultData = {
-      gameConfig: { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] }, lock: false },
+      gameConfig: {
+        step: 'init',
+        godStep: 'none',
+        playerState: {},
+        finalMoveCards: { available: [], used: [] },
+        lock: false,
+        waitList: [] // اضافه کردن waitList
+      },
       players: {},
       rolesAssigned: [],
       rolesAvailable: []
@@ -88,7 +95,14 @@ async function loadData(D1) {
     console.error(`Error loading data from D1: ${error.message}`);
     return {
       cachedData: {
-        gameConfig: { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] }, lock: false },
+        gameConfig: {
+          step: 'init',
+          godStep: 'none',
+          playerState: {},
+          finalMoveCards: { available: [], used: [] },
+          lock: false,
+          waitList: []
+        },
         players: {},
         rolesAssigned: [],
         rolesAvailable: []
@@ -150,51 +164,92 @@ async function sendMessage(telegramToken, chatId, text, options = {}, autoDelete
 }
 
 // Section 6: Game Logic
-async function assignRole(rolesAvailable, rolesAssigned, players, playerId, name, playerCount, gameConfig, D1, cachedData, cachedPlayerNames) {
-  if (gameConfig.lock) {
-    return { success: false, message: '🚫 تخصیص نقش در حال انجام است. لطفاً چند لحظه صبر کنید.' };
+async function assignRole(telegramToken, D1, cachedData, cachedPlayerNames, userId, chatId, name, type) {
+  let { gameConfig } = cachedData;
+
+  // اضافه کردن درخواست به waitList
+  gameConfig.waitList = gameConfig.waitList || [];
+  gameConfig.waitList.push({ userId, chatId, name, type });
+
+  cachedData.gameConfig = gameConfig;
+  await saveData(D1, cachedData, cachedPlayerNames);
+
+  // شروع پردازش لیست انتظار
+  await processWaitList(telegramToken, D1, cachedData, cachedPlayerNames);
+
+  return { success: true, message: 'درخواست در لیست انتظار قرار گرفت.' };
+}
+
+async function processWaitList(telegramToken, D1, cachedData, cachedPlayerNames) {
+  const { gameConfig, players, rolesAssigned, rolesAvailable } = cachedData;
+
+  // اگر قفل فعال است یا لیست انتظار خالی است، پردازش را متوقف کن
+  if (gameConfig.lock || gameConfig.waitList.length === 0) {
+    return;
   }
+
+  // قفل‌گذاری برای جلوگیری از پردازش هم‌زمان
   gameConfig.lock = true;
   cachedData.gameConfig = gameConfig;
   await saveData(D1, cachedData, cachedPlayerNames);
 
   try {
+    // گرفتن اولین درخواست از لیست انتظار
+    const request = gameConfig.waitList.shift();
+    const { userId, chatId, name, type } = request;
+
     const availableRoles = rolesAvailable.filter(r => !rolesAssigned.includes(r));
-    if (availableRoles.length === 0 || rolesAssigned.length >= playerCount) {
+    if (availableRoles.length === 0 || rolesAssigned.length >= gameConfig.playerCount) {
+      await sendMessage(telegramToken, chatId, '🚫 هیچ نقشی برای تخصیص باقی نمانده است.', {}, true);
       gameConfig.lock = false;
       cachedData.gameConfig = gameConfig;
       await saveData(D1, cachedData, cachedPlayerNames);
-      return { success: false, message: '🚫 هیچ نقشی برای تخصیص باقی نمانده است.' };
+      // ادامه پردازش لیست انتظار
+      await processWaitList(telegramToken, D1, cachedData, cachedPlayerNames);
+      return;
     }
-    console.log('Before assign:', { availableRoles, rolesAssigned, playerCount });
-    const role = availableRoles[Math.floor(Math.random() * availableRoles.length)];
-    players[playerId] = { name, role };
-    rolesAssigned.push(role);
-    console.log('After assign:', { role, availableRoles, rolesAssigned });
 
-    if (rolesAssigned.length > playerCount) {
+    const role = availableRoles[Math.floor(Math.random() * availableRoles.length)];
+    players[userId] = { name, role };
+    rolesAssigned.push(role);
+
+    if (rolesAssigned.length > gameConfig.playerCount) {
       rolesAssigned.pop();
-      delete players[playerId];
+      delete players[userId];
+      await sendMessage(telegramToken, chatId, '🚫 خطا: تعداد نقش‌های تخصیص‌شده بیش از حد مجاز است.', {}, true);
       gameConfig.lock = false;
       cachedData.gameConfig = gameConfig;
       cachedData.players = players;
       cachedData.rolesAssigned = rolesAssigned;
       await saveData(D1, cachedData, cachedPlayerNames);
-      return { success: false, message: '🚫 خطا: تعداد نقش‌های تخصیص‌شده بیش از حد مجاز است.' };
+      // ادامه پردازش لیست انتظار
+      await processWaitList(telegramToken, D1, cachedData, cachedPlayerNames);
+      return;
     }
 
+    cachedPlayerNames[userId] = name;
+    await sendMessage(telegramToken, chatId, `✅ نام: ${name} | نقش: ${role}`, {
+      reply_markup: {
+        inline_keyboard: [[{ text: '✏️ تغییر نام', callback_data: 'change_name' }]]
+      }
+    }, true);
+
+    // آزاد کردن قفل و ذخیره داده‌ها
     gameConfig.lock = false;
     cachedData.gameConfig = gameConfig;
     cachedData.players = players;
     cachedData.rolesAssigned = rolesAssigned;
     await saveData(D1, cachedData, cachedPlayerNames);
-    return { success: true, role };
+
+    // ادامه پردازش لیست انتظار
+    await processWaitList(telegramToken, D1, cachedData, cachedPlayerNames);
   } catch (error) {
+    console.error(`Error in processWaitList: ${error.message}`);
     gameConfig.lock = false;
     cachedData.gameConfig = gameConfig;
     await saveData(D1, cachedData, cachedPlayerNames);
-    console.error(`Error in assignRole: ${error.message}`);
-    return { success: false, message: '🚫 خطا در تخصیص نقش.' };
+    // ادامه پردازش حتی در صورت خطا
+    await processWaitList(telegramToken, D1, cachedData, cachedPlayerNames);
   }
 }
 
@@ -216,11 +271,19 @@ async function handleUpdate(telegramToken, D1, env, update) {
 
   let { cachedData, cachedPlayerNames } = await loadData(D1);
   let { gameConfig, players, rolesAssigned, rolesAvailable } = cachedData;
-  gameConfig = gameConfig || { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] }, lock: false };
+  gameConfig = gameConfig || {
+    step: 'init',
+    godStep: 'none',
+    playerState: {},
+    finalMoveCards: { available: [], used: [] },
+    lock: false,
+    waitList: []
+  };
   players = players || {};
   rolesAssigned = rolesAssigned || [];
   rolesAvailable = rolesAvailable || [];
   gameConfig.finalMoveCards = gameConfig.finalMoveCards || { available: [], used: [] };
+  gameConfig.waitList = gameConfig.waitList || [];
 
   // Handle /r command
   if (text === '/r') {
@@ -317,7 +380,14 @@ async function handleUpdate(telegramToken, D1, env, update) {
     }
   } else if (gameConfig.step === 'check_master_password_reset') {
     if (text === env.MASTER_PASSWORD) {
-      cachedData.gameConfig = { step: 'init', godStep: 'none', playerState: {}, finalMoveCards: { available: [], used: [] }, lock: false };
+      cachedData.gameConfig = {
+        step: 'init',
+        godStep: 'none',
+        playerState: {},
+        finalMoveCards: { available: [], used: [] },
+        lock: false,
+        waitList: []
+      };
       cachedData.players = {};
       cachedData.rolesAssigned = [];
       cachedData.rolesAvailable = [];
@@ -637,59 +707,34 @@ async function handleUpdate(telegramToken, D1, env, update) {
           }
         });
       }
-    } else if (gameConfig.godStep === 'assign_role_set_name') {
-      if (callbackData === 'cancel_assign_role') {
-        gameConfig.godStep = 'none';
-        gameConfig.lock = false;
-        await sendMessage(telegramToken, chatId, '🚫 فرآیند تخصیص نقش لغو شد. 📋 دستورات شما:', {
-          reply_markup: {
-            keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
-              [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
-              [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
-            one_time_keyboard: false
-          }
-        });
-        cachedData.gameConfig = gameConfig;
-        await saveData(D1, cachedData, cachedPlayerNames);
-      } else if (!isValidName(text)) {
-        await sendMessage(telegramToken, chatId, '🚫 نام نامعتبر است. فقط حروف فارسی (حداقل ۳ حرف) مجاز است. دوباره وارد کنید یا انصراف دهید:', {
-          reply_markup: {
-            inline_keyboard: [[{ text: '🚫 انصراف', callback_data: 'cancel_assign_role' }]]
-          }
-        });
-        return new Response('OK', { status: 200 });
-      } else {
-        const playerId = `god_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-        const result = await assignRole(rolesAvailable, rolesAssigned, players, playerId, text, gameConfig.playerCount, gameConfig, D1, cachedData, cachedPlayerNames);
-        if (result.success) {
-          cachedPlayerNames[playerId] = text;
-          await sendMessage(telegramToken, chatId, `✅ نقش ${result.role} به ${text} داده شد.`, {}, true);
-          gameConfig.godStep = 'none';
-          await sendMessage(telegramToken, chatId, '📋 دستورات شما:', {
-            reply_markup: {
-              keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
-                [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
-                [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
-              one_time_keyboard: false
-            }
-          });
-        } else {
-          await sendMessage(telegramToken, chatId, result.message);
-          gameConfig.godStep = 'none';
-          await sendMessage(telegramToken, chatId, '📋 دستورات شما:', {
-            reply_markup: {
-              keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
-                [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
-                [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
-              one_time_keyboard: false
-            }
-          });
-        }
-        cachedData.gameConfig = gameConfig;
-        cachedData.players = players;
-        cachedData.rolesAssigned = rolesAssigned;
-        await saveData(D1, cachedData, cachedPlayerNames);
+} else if (gameConfig.godStep === 'assign_role_set_name') {
+  if (callbackData === 'cancel_assign_role') {
+    gameConfig.godStep = 'none';
+    gameConfig.lock = false;
+    await sendMessage(telegramToken, chatId, '🚫 فرآیند تخصیص نقش لغو شد. 📋 دستورات شما:', {
+      reply_markup: {
+        keyboard: gameConfig.scenario === 'شب مافیا' && rolesAssigned.length === gameConfig.playerCount ?
+          [['فهرست', 'نقش دادن'], ['پایان بازی', 'کارت حرکت آخر'], ['پاک‌سازی نقش‌ها']] :
+          [['فهرست', 'نقش دادن'], ['پایان بازی'], ['پاک‌سازی نقش‌ها']],
+        one_time_keyboard: false
       }
+    });
+    cachedData.gameConfig = gameConfig;
+    await saveData(D1, cachedData, cachedPlayerNames);
+  } else if (!isValidName(text)) {
+    await sendMessage(telegramToken, chatId, '🚫 نام نامعتبر است. فقط حروف فارسی (حداقل ۳ حرف) مجاز است. دوباره وارد کنید یا انصراف دهید:', {
+      reply_markup: {
+        inline_keyboard: [[{ text: '🚫 انصراف', callback_data: 'cancel_assign_role' }]]
+      }
+    });
+    return new Response('OK', { status: 200 });
+  } else {
+    const playerId = `god_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+    await assignRole(telegramToken, D1, cachedData, cachedPlayerNames, playerId, chatId, text, 'god');
+    gameConfig.godStep = 'none';
+    cachedData.gameConfig = gameConfig;
+    await saveData(D1, cachedData, cachedPlayerNames);
+  }    
     } else if (gameConfig.godStep === 'confirm_end_game') {
       if (callbackData === 'confirm_end_yes') {
         gameConfig.step = 'check_master_password_reset';
@@ -849,24 +894,10 @@ async function handleUpdate(telegramToken, D1, env, update) {
         if (text === gameConfig.gamePassword) {
           const savedName = cachedPlayerNames[userId];
           if (savedName && isValidName(savedName)) {
-            const result = await assignRole(rolesAvailable, rolesAssigned, players, userId, savedName, gameConfig.playerCount, gameConfig, D1, cachedData, cachedPlayerNames);
-            if (result.success) {
-              await sendMessage(telegramToken, chatId, `✅ نام: ${savedName} | نقش: ${result.role}`, {
-                reply_markup: {
-                  inline_keyboard: [[{ text: '✏️ تغییر نام', callback_data: 'change_name' }]]
-                }
-              }, true);
-              delete gameConfig.playerState[userId];
-              cachedData.gameConfig = gameConfig;
-              cachedData.players = players;
-              cachedData.rolesAssigned = rolesAssigned;
-              await saveData(D1, cachedData, cachedPlayerNames);
-            } else {
-              await sendMessage(telegramToken, chatId, result.message);
-              delete gameConfig.playerState[userId];
-              cachedData.gameConfig = gameConfig;
-              await saveData(D1, cachedData, cachedPlayerNames);
-            }
+            await assignRole(telegramToken, D1, cachedData, cachedPlayerNames, userId, chatId, savedName, 'player');
+            delete gameConfig.playerState[userId];
+            cachedData.gameConfig = gameConfig;
+            await saveData(D1, cachedData, cachedPlayerNames);
           } else {
             gameConfig.playerState[userId] = { step: 'set_name' };
             await sendMessage(telegramToken, chatId, '✏️ نام خود را وارد کنید (فقط حروف فارسی، حداقل ۳ حرف):');
@@ -881,25 +912,10 @@ async function handleUpdate(telegramToken, D1, env, update) {
           await sendMessage(telegramToken, chatId, '🚫 نام نامعتبر است. فقط حروف فارسی (حداقل ۳ حرف) مجاز است. دوباره وارد کنید:');
           return new Response('OK', { status: 200 });
         }
-        const result = await assignRole(rolesAvailable, rolesAssigned, players, userId, text, gameConfig.playerCount, gameConfig, D1, cachedData, cachedPlayerNames);
-        if (result.success) {
-          cachedPlayerNames[userId] = text;
-          await sendMessage(telegramToken, chatId, `✅ نام: ${text} | نقش: ${result.role}`, {
-            reply_markup: {
-              inline_keyboard: [[{ text: '✏️ تغییر نام', callback_data: 'change_name' }]]
-            }
-          }, true);
-          delete gameConfig.playerState[userId];
-          cachedData.gameConfig = gameConfig;
-          cachedData.players = players;
-          cachedData.rolesAssigned = rolesAssigned;
-          await saveData(D1, cachedData, cachedPlayerNames);
-        } else {
-          await sendMessage(telegramToken, chatId, result.message);
-          delete gameConfig.playerState[userId];
-          cachedData.gameConfig = gameConfig;
-          await saveData(D1, cachedData, cachedPlayerNames);
-        }
+        await assignRole(telegramToken, D1, cachedData, cachedPlayerNames, userId, chatId, text, 'player');
+        delete gameConfig.playerState[userId];
+        cachedData.gameConfig = gameConfig;
+        await saveData(D1, cachedData, cachedPlayerNames);
       }
     } else {
       await sendMessage(telegramToken, chatId, `✅ شما قبلاً نقش گرفته‌اید: ${players[userId].role}`, {
